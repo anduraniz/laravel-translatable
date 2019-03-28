@@ -175,7 +175,13 @@ trait HasTranslations
 
     protected function getLocale() : string
     {
-        return config('app.locale');
+        if (app() instanceof \Illuminate\Foundation\Application) {
+            // Laravel
+            return config('app.locale');
+        } else {
+            // Lumen
+            return app('translator')->getLocale();
+        }
     }
 
     public function getTranslatableAttributes() : array
